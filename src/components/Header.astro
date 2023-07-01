@@ -1,0 +1,49 @@
+---
+import { Image } from '@astrojs/image/components';
+import Navigation from "./Navigation.astro";
+
+import prismic from "@prismicio/client";
+import { client } from "../prismic";
+
+const header = await client.getSingle("header");
+const headerNavigation = await client.getByUID("navigation", "header-menu");
+---
+<header>
+  <Image src={header.data.logo.url} width={header.data.logo.dimensions.width} height={header.data.logo.dimensions.height} alt={header.data.logo.alt}/>
+  <Navigation navigation={headerNavigation} isHeader=true/>
+  <button><a href={prismic.asLink(header.data.button_link)}>{prismic.asText(header.data.button_text)}</a></button>
+</header>
+
+<style>
+    header {
+    width: 100%;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2.5% 0;
+  }
+
+  img {
+    width: 10%;
+    height: auto;
+  }
+
+  button {
+    border-radius: 25px;
+    border: none;
+    background-image: linear-gradient(to right, #E99D23, #CB2027);
+    padding: 1.5% 4%;
+    font-size: 0.9rem;
+  }
+
+  button a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  button a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import { Image } from "@astrojs/image/components";
+import prismic from "@prismicio/client";
+const { slice } = Astro.props;
+---
+<section>
+  <div class="content">
+    <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
+    <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
+    <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
+    <div class="buttons">
+      {slice.items.map((button) => {
+        return (
+          <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
+        )
+      })}
+    </div>
+  </div>
+  <div class="image">
+    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
+</div>
+</section>
+
+<style>
+  section {
+    width: 92.5%;
+    display: flex;
+    padding: 2.5% 0 0 7.5%;
+    background: #ffffff;
+  }
+
+  section:nth-child(even) {
+    background: #f5f5f5;
+  }
+
+  .content {
+    width: 50%;
+  }
+
+  .image {
+    width: 40%;
+    margin-left: 10%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .buttons {
+    margin-top: 10vh;
+  }
+
+  button {
+    border-radius: 25px;
+    border: none;
+    background-image: linear-gradient(to right, #E99D23, #CB2027);
+    padding: 1.5% 4%;
+  }
+
+  button:last-of-type {
+    background: white;
+    border: 1px solid #ccc;
+    margin-left: 1%;
+  }
+
+  button a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  button:last-of-type a {
+    color: #e99d23;
+  }
+
+  button a:hover {
+    text-decoration: underline;
+  }
+</style>

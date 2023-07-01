@@ -1,0 +1,42 @@
+---
+import { Image } from '@astrojs/image/components';
+import prismic from "@prismicio/client";
+
+const { navigation, isHeader, isFooter } = Astro.props;
+---
+<nav class:list={[{ footer: isFooter }, { header: isHeader }]}>
+{navigation.data.navigation_items.map((link) => (
+  <ul>
+    <li><a href={prismic.asLink(link.navigation_link)}>{prismic.asText(link.navigation_text)}</a></li>
+    </ul>
+))}
+</nav>
+
+<style>
+    nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+  a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .header a {
+    font-weight: 500;
+  }
+
+  .footer a {
+    color: #ffffff;
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+import { Image } from '@astrojs/image/components';
+import Navigation from "./Navigation.astro";
+
+import prismic from "@prismicio/client";
+import { client } from "../prismic";
+
+const footer = await client.getSingle("footer");
+const socialLinks = await client.getByUID("navigation", "social-links");
+const footerNavigation = await client.getByUID("navigation", "footer-menu");
+---
+<footer>
+  <Image src={footer.data.logo.url} width={footer.data.logo.dimensions.width} height={footer.data.logo.dimensions.height} alt={footer.data.logo.alt}/>
+  <Fragment set:html={prismic.asHTML(footer.data.footer_text)}/>
+  <section class="footer-links">
+    <Navigation navigation={socialLinks} isFooter=true/>
+    <Navigation navigation={footerNavigation} isFooter="true"/>
+  </section>
+  <p class="copyright">© {new Date().getFullYear()} Spyrath Dev</p>
+</footer>
+
+<style>
+  p {
+    line-height: 1.5;
+  }
+
+  footer {
+    background: #130f1f;
+    color: #ffffff;
+    padding: 2.5% 10%;
+    margin-top: 2.5%;
+  }
+
+  img {
+    display: block;
+    width: 10%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .copyright {
+    text-align: center;
+  }
+</style>

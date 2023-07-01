@@ -1,0 +1,15 @@
+---
+import Content from "../slices/Content.astro";
+
+const { slices } = Astro.props;
+---
+{slices.map((slice) => {
+   switch (slice.slice_type) {
+    case 'section':
+      return (
+        <Content slice={slice} />
+      )
+    default:
+      return "<p>There is no component for this slice</p>"
+  }
+})}

@@ -1,36 +1,105 @@
 ---
-export interface Props {
-	title: string;
-}
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
-const { title } = Astro.props;
+const { title, description, image } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
+		<meta name="description" content={description}>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content={title}>
+		<meta property="og:url" content={description}>
+		<meta property="og:image" content={image}>
+				<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<Header />
+			<slot />
+		<Footer />
 	</body>
 </html>
 <style is:global>
 	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+		font-size: 14pt;
+		--system-fonts: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	}
+
+	@font-face {
+    font-family: 'Graphik';
+    src: url('/fonts/graphik-bold.woff2') format('woff2'),
+         url('/fonts/graphik-bold.woff') format('woff');
+    font-weight: 700;
+}
+
+	@font-face {
+			font-family: 'Graphik';
+			src: url('/fonts/graphik-semibold.woff2') format('woff2'),
+					url('/fonts/graphik-semibold.woff') format('woff');
+			font-weight: 600;
+	}
+
+	@font-face {
+			font-family: 'Graphik';
+			src: url('/fonts/graphik-medium.woff2') format('woff2'),
+					url('/fonts/graphik-medium.woff') format('woff');
+			font-weight: 500;
+	}
+
+	@font-face {
+			font-family: 'Graphik';
+			src: url('/fonts/graphik-regular.woff2') format('woff2'),
+					url('/fonts/graphik-regular.woff') format('woff');
+			font-weight: 400;
+	}
+
+	@font-face {
+			font-family: 'Graphik';
+			src: url('/fonts/graphik-light.woff2') format('woff2'),
+					url('/fonts/graphik-light.woff') format('woff');
+			font-weight: 300;
+	}
+
 	html {
-		font-family: system-ui, sans-serif;
+		font-family: "Graphik", var(--system-fonts);
 		background-color: #F6F6F6;
 	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-size: 1rem;
+	}
+
+	p {
+		margin: 2.5% 0;
+		line-height: 1.5;
+	}
+
+	strong {
+    font-weight: 500;
+  }
+
+	.content h2 {
+		font-weight: 500;
+		line-height: 1.25;
+	}
+
+	.content h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3a5c64;
+		line-height: 1.25;
+		margin: -10px 0 2.5% 0;
+  }
+
+	.content h3::first-line {
+		color: #e17b24;
 	}
 </style>
