@@ -4,6 +4,9 @@ import prismic from "@prismicio/client";
 const { slice } = Astro.props;
 ---
 <section>
+  <div class="image">
+    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
+  </div>
   <div class="content">
     <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
     <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
@@ -16,9 +19,6 @@ const { slice } = Astro.props;
       })}
     </div>
   </div>
-  <div class="image">
-    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
-</div>
 </section>
 
 <style>
@@ -35,6 +35,7 @@ const { slice } = Astro.props;
 
   .content {
     width: 50%;
+    margin-right: 2.5%;
   }
 
   .image {
