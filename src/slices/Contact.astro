@@ -1,0 +1,102 @@
+---
+import prismic from "@prismicio/client";
+import { PrismicRichTextImpl } from "@prismicio/vue/dist/components";
+const { slice } = Astro.props;
+---
+<script>
+  const inputs = document.querySelectorAll("input");
+  const input = inputs[inputs.length - 1];
+  const textarea = document.createElement("textarea");
+  textarea.placeholder = input.placeholder;
+  textarea.required = "true";
+  textarea.cols = 70;
+  textarea.rows = 10;
+  input.parentNode.replaceChild(textarea, input);
+</script>
+
+<section>
+    <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
+    <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
+    <form name="contact" data-netlify="true">
+      {slice.items.map((item) => {
+        return (
+          <label>
+            <Fragment set:html={prismic.asHTML(item.field_label)}/>
+            <input type="text" placeholder={prismic.asText(item.field_placeholder)} required="true"/>
+          </label>
+        )
+      })}
+    </form>
+    <button type="submit">
+      <Fragment set:html={prismic.asHTML(slice.primary.button_text)}/>
+    </button>
+</section>
+
+<style>
+  section {
+    width: 92.5%;
+    margin: 0 20%;
+    padding: 2.5% 0 2.5% 7.5%;
+    background: #f5f5f5;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #3a5c64;
+		line-height: 1.25;
+		margin: -10px 0 2.5% 0;
+  }
+
+	h2::first-line {
+		color: #e17b24;
+	}
+
+  label {
+    font-weight: 500;
+  }
+
+  p {
+    max-width: 100%;
+  }
+
+  label p {
+    margin-bottom: 1%;
+  }
+
+  input, textarea {
+    width: 40%;
+    padding: 1% 0 1% 1%;
+    border: solid 1px #919191;
+    border-radius: 10px;
+  }
+
+  button {
+    border-radius: 25px;
+    border: none;
+    background-image: linear-gradient(to right, #E99D23, #CB2027);
+    margin-top: 3.5vh;
+    margin-right: 2.5%;
+    padding: 1% 5%;
+    font-size: 0.9rem;
+  }
+
+  button a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  button a:hover {
+    text-decoration: underline;
+  }
+
+  button[type="submit"] {
+    color: #ffffff;
+  }
+
+  button[type="submit"]:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+</style>
