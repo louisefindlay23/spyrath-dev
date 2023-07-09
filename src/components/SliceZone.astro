@@ -1,6 +1,8 @@
 ---
 import Content from "../slices/Content.astro";
 import ContentRight from "../slices/ContentRight.astro";
+import ContentCenter from "../slices/ContentCenter.astro";
+import Testimonial from "../slices/Testimonial.astro";
 
 const { slices } = Astro.props;
 ---
@@ -13,6 +15,14 @@ const { slices } = Astro.props;
     case "content_right":
       return (
         <ContentRight slice={slice} />
+      )
+    case "content_center":
+      return (
+        <ContentCenter slice={slice} />
+      )
+    case "testimonial":
+      return (
+        <Testimonial slice={slice} />
       )
     default:
       return "<p>There is no component for this slice</p>"

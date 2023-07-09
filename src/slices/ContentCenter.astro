@@ -4,9 +4,11 @@ import prismic from "@prismicio/client";
 const { slice } = Astro.props;
 ---
 <section>
+  <div class="image">
+    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
+</div>
   <div class="content">
     <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
-    <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
     <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
     <div class="buttons">
       {slice.items.map((button) => {
@@ -16,15 +18,11 @@ const { slice } = Astro.props;
       })}
     </div>
   </div>
-  <div class="image">
-    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
-</div>
 </section>
 
 <style>
   section {
     width: 92.5%;
-    display: flex;
     padding: 2.5% 0 2.5% 7.5%;
     background: #ffffff;
   }
@@ -33,18 +31,9 @@ const { slice } = Astro.props;
     background: #f5f5f5;
   }
 
-  .content {
-    width: 50%;
-  }
-
-  .image {
-    width: 40%;
-    margin-left: 10%;
-  }
-
   img {
     display: block;
-    width: 100%;
+    width: 50%;
     height: auto;
     margin: 0 auto;
   }
@@ -57,8 +46,7 @@ const { slice } = Astro.props;
     border-radius: 25px;
     border: none;
     background-image: linear-gradient(to right, #E99D23, #CB2027);
-    margin-right: 2.5%;
-    padding: 2.5% 7.5%;
+    padding: 1.5% 3%;
     font-size: 0.9rem;
   }
 
@@ -66,6 +54,10 @@ const { slice } = Astro.props;
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
+  }
+
+  h2 {
+    color: red
   }
 
   button a:hover {

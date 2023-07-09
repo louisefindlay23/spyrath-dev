@@ -1,0 +1,116 @@
+---
+import { Image } from "@astrojs/image/components";
+import prismic from "@prismicio/client";
+
+const { slice } = Astro.props;
+---
+
+<section>
+  <div class="content">
+    <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
+    <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
+
+    <div class="author">
+      <Image src={slice.primary.author_image.url} width={slice.primary.author_image.dimensions.width} height={slice.primary.author_image.dimensions.height} alt={slice.primary.author_image.alt}/>
+
+      <div class="author-content">
+        <Fragment set:html={prismic.asHTML(slice.primary.author_name)}/>
+        <Fragment set:html={prismic.asHTML(slice.primary.author_title)}/>
+
+        <div class="buttons">
+          {slice.items.map((button) => {
+            return (
+              <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text">
+    <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
+  </div>
+
+</section>
+
+<style>
+  section {
+    width: 92.5%;
+    display: flex;
+    padding: 2.5% 0 2.5% 7.5%;
+    background: #ffffff;
+  }
+
+  section:nth-child(even) {
+    background: #f5f5f5;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .content {
+    width: 50%;
+  }
+
+  .author {
+    display: flex;
+  }
+
+  .author img {
+    width: 25%;
+    margin: 0;
+    border-radius: 50%;
+  }
+
+  .author-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+  }
+
+  .author-content p {
+    color: #6f95b1;
+  }
+
+  .author-content h4 {
+    font-weight: 600;
+    color: #3a5c64;
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 3.5vh;
+  }
+
+  button {
+    border-radius: 25px;
+    border: none;
+    background-image: linear-gradient(to right, #E99D23, #CB2027);
+    padding: 5% 10%;
+    font-size: 0.9rem;
+  }
+
+  button a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  button a:hover {
+    text-decoration: underline;
+  }
+
+  .text {
+    width: 40%;
+    background: #ffffff;
+    padding: 2.5%;
+  }
+</style>
