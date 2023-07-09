@@ -4,6 +4,7 @@ import ContentRight from "../slices/ContentRight.astro";
 import ContentCenter from "../slices/ContentCenter.astro";
 import Testimonial from "../slices/Testimonial.astro";
 import Contact from "../slices/Contact.astro";
+import ContentDual from "../slices/ContentDual.astro";
 
 const { slices } = Astro.props;
 ---
@@ -20,6 +21,10 @@ const { slices } = Astro.props;
     case "content_center":
       return (
         <ContentCenter slice={slice} />
+      )
+    case "content_dual":
+      return (
+        <ContentDual slice={slice} />
       )
     case "testimonial":
       return (

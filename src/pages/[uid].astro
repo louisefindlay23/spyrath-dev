@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SliceZone from "../components/SliceZone.astro";
+
+import prismic from "@prismicio/client";
+import { client } from "../prismic";
+
+export async function getStaticPaths() {
+  const pages = await client.getAllByType('pages')
+  return pages.map((page) => {
+    return {
+      params: { uid: page.uid },
+    };
+  });
+}
+
+const { uid } = Astro.params;
+
+const page = await client.getByUID("pages", uid);
+---
+<Layout title={prismic.asText(page.data.meta_title)} description={prismic.asText(page.data.meta_description)} image={page.data.meta_image.url}>
+	<main>
+		<SliceZone slices={page.data.body}/>
+	</main>
+</Layout>
+
+<style>
+</style>

@@ -1,0 +1,75 @@
+---
+import { Image } from "@astrojs/image/components";
+import prismic from "@prismicio/client";
+const { slice } = Astro.props;
+---
+<section>
+  <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
+  <Image src={slice.primary.image.url} width={slice.primary.featured_image.dimensions.width} height={slice.primary.featured_image.dimensions.height} alt={slice.primary.image.alt}/>
+    <!-- <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
+    <Fragment set:html={prismic.asHTML(slice.primary.text)}/> -->
+    {slice.items.map((button) => {
+      return (
+        <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
+      )
+    })}
+    <div class="buttons">
+      {slice.items.map((button) => {
+        return (
+          <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
+        )
+      })}
+    </div>
+</section>
+
+<style>
+  section {
+    width: 92.5%;
+    display: flex;
+    padding: 2.5% 0 2.5% 7.5%;
+    background: #ffffff;
+  }
+
+  section:nth-child(even) {
+    background: #f5f5f5;
+  }
+
+  .content {
+    width: 50%;
+  }
+
+  .image {
+    width: 40%;
+    margin-left: 10%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .buttons {
+    margin-top: 3.5vh;
+  }
+
+  button {
+    border-radius: 25px;
+    border: none;
+    background-image: linear-gradient(to right, #E99D23, #CB2027);
+    margin-right: 2.5%;
+    padding: 2.5% 7.5%;
+    font-size: 0.9rem;
+  }
+
+  button a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  button a:hover {
+    text-decoration: underline;
+  }
+</style>
