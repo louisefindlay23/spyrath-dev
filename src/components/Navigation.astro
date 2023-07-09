@@ -1,13 +1,19 @@
 ---
-import { Image } from '@astrojs/image/components';
+import { Icon } from 'astro-icon';
 import prismic from "@prismicio/client";
 
 const { navigation, isHeader, isFooter } = Astro.props;
 ---
 <nav class:list={[{ footer: isFooter }, { header: isHeader }]}>
-{navigation.data.navigation_items.map((link) => (
+{navigation.data.navigation_items.map((link) =>
+(
   <ul>
-    <li><a href={prismic.asLink(link.navigation_link)}>{prismic.asText(link.navigation_text)}</a></li>
+    <li>
+      <a href={prismic.asLink(link.navigation_link)}>
+        {prismic.isFilled.richText(link.navigation_icon) && <Icon name={prismic.asText(link.navigation_icon)} />}
+        {prismic.asText(link.navigation_text)}
+      </a>
+    </li>
     </ul>
 ))}
 </nav>
@@ -23,7 +29,14 @@ const { navigation, isHeader, isFooter } = Astro.props;
     list-style-type: none;
   }
 
+  svg {
+    width: 10%;
+  }
+
   a {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     color: #1a1a1a;
     text-decoration: none;
   }
