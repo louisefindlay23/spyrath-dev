@@ -22,7 +22,7 @@ const { slices } = Astro.props;
       return (
         <ContentCenter slice={slice} />
       )
-    case "content_dual":
+    case "dual_content":
       return (
         <ContentDual slice={slice} />
       )
@@ -35,6 +35,7 @@ const { slices } = Astro.props;
         <Contact slice={slice} />
       )
     default:
-      return "<p>There is no component for this slice</p>"
+      console.info(slice.slice_type);
+      return null
   }
 })}

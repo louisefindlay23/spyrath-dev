@@ -1,4 +1,6 @@
 ---
+import { Image } from "@astrojs/image/components";
+
 import Layout from "../layouts/Layout.astro";
 import SliceZone from "../components/SliceZone.astro";
 
@@ -20,9 +22,34 @@ const page = await client.getByUID("pages", uid);
 ---
 <Layout title={prismic.asText(page.data.meta_title)} description={prismic.asText(page.data.meta_description)} image={page.data.meta_image.url}>
 	<main>
+    <section>
+      <Fragment set:html={prismic.asHTML(page.data.heading)}/>
+      { prismic.isFilled.image(page.data.featured_image) && <Image src={page.data.featured_image.url} width={page.data.featured_image.dimensions.width} height={page.data.featured_image.dimensions.height} alt={page.data.featured_image.alt}/> }
+    </section>
 		<SliceZone slices={page.data.body}/>
 	</main>
 </Layout>
 
 <style>
+  section {
+    background: #f7fbfd;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #e17b24;
+  }
+
+  h2:first-word {
+    color: #3a5c64;
+  }
+
+  img {
+    display: block;
+    width: 40%;
+    height: auto;
+    margin: 0 auto;
+
+  }
 </style>

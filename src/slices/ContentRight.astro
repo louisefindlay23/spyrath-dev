@@ -5,7 +5,11 @@ const { slice } = Astro.props;
 ---
 <section>
   <div class="image">
-    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
+    {slice.items.filter(item => item.image && prismic.isFilled.image(item.image)).map((item) => {
+      return (
+        <Image src={item.image.url} width={item.image.dimensions.width} height={item.image.dimensions.height} alt={item.image.alt}/>
+      )
+    })}
   </div>
   <div class="content">
     <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>

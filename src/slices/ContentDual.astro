@@ -4,11 +4,21 @@ import prismic from "@prismicio/client";
 const { slice } = Astro.props;
 ---
 <section>
-  <Fragment set:html={prismic.asHTML(slice.primary.heading)}/>
-  <Image src={slice.primary.image.url} width={slice.primary.featured_image.dimensions.width} height={slice.primary.featured_image.dimensions.height} alt={slice.primary.image.alt}/>
-    <!-- <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
-    <Fragment set:html={prismic.asHTML(slice.primary.text)}/> -->
-    {slice.items.map((button) => {
+  <Fragment set:html={prismic.asHTML(slice.primary.heading1)} />
+    <!-- <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/> -->
+  <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
+  <div class="content">
+  {slice.items.map((item) => {
+    return (
+    <div>
+      <Fragment set:html={prismic.asHTML(item.section_heading)} />
+      <Fragment set:html={prismic.asHTML(item.section_text)} />
+      <Fragment set:html={prismic.asHTML(item.section_text_2)} />
+    </div>
+    )
+  })}
+  </div>
+<!--     {slice.items.map((button) => {
       return (
         <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
       )
@@ -19,13 +29,14 @@ const { slice } = Astro.props;
           <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
         )
       })}
-    </div>
+    </div> -->
 </section>
 
 <style>
   section {
     width: 92.5%;
     display: flex;
+    flex-direction: column;
     padding: 2.5% 0 2.5% 7.5%;
     background: #ffffff;
   }
@@ -34,8 +45,32 @@ const { slice } = Astro.props;
     background: #f5f5f5;
   }
 
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #e17b24;
+  }
+
+  h2:first-word {
+    color: #3a5c64;
+  }
+
+  h3 {
+    text-align: center;
+    color: #e17b24;
+  }
+
   .content {
-    width: 50%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .content div {
+    width: 40%;
+  }
+
+  .content div:last-of-type h3 {
+    color: #3a5c64;
   }
 
   .image {

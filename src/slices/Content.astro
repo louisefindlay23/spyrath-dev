@@ -9,15 +9,22 @@ const { slice } = Astro.props;
     <Fragment set:html={prismic.asHTML(slice.primary.subheading)}/>
     <Fragment set:html={prismic.asHTML(slice.primary.text)}/>
     <div class="buttons">
-      {slice.items.map((button) => {
-        return (
-          <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
-        )
-      })}
+      {slice.items
+        .filter(button => prismic.isFilled.richText(button.button_text))
+        .map((button) => (
+          <button>
+            <a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a>
+          </button>
+        ))}
+      
     </div>
   </div>
   <div class="image">
-    <Image src={slice.primary.image.url} width={slice.primary.image.dimensions.width} height={slice.primary.image.dimensions.height} alt={slice.primary.image.alt}/>
+    {slice.items.filter(item => item.image && prismic.isFilled.image(item.image)).map((item) => {
+      return (
+        <Image src={item.image.url} width={item.image.dimensions.width} height={item.image.dimensions.height} alt={item.image.alt}/>
+      )
+    })}
 </div>
 </section>
 

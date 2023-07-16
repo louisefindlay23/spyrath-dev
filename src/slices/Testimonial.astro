@@ -18,11 +18,13 @@ const { slice } = Astro.props;
         <Fragment set:html={prismic.asHTML(slice.primary.author_title)}/>
 
         <div class="buttons">
-          {slice.items.map((button) => {
-            return (
-              <button><a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a></button>
-            )
-          })}
+          {slice.items
+            .filter(button => prismic.isFilled.richText(button.button_text))
+            .map((button) => (
+              <button>
+                <a href={prismic.asLink(button.button_link)}>{prismic.asText(button.button_text)}</a>
+              </button>
+            ))}
         </div>
       </div>
     </div>
