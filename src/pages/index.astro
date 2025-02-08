@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SliceZone from "../components/SliceZone.astro";
 
-import prismic from "@prismicio/client";
+import * as prismic from "@prismicio/client";
 import { client } from "../prismic";
 
 const home = await client.getByUID("pages", "home");

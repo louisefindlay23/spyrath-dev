@@ -1,8 +1,8 @@
 ---
-import { Image } from '@astrojs/image/components';
+import { Image } from 'astro:assets';
 import Navigation from "./Navigation.astro";
 
-import prismic from "@prismicio/client";
+import * as prismic from "@prismicio/client";
 import { client } from "../prismic";
 
 const header = await client.getSingle("header");
